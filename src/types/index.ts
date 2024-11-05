@@ -1,22 +1,4 @@
 // types/index.ts
-export interface Product {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  category: string;
-  createdAt: string;
-}
-
-export interface Budget {
-  id: string;
-  title: string;
-  amount: number;
-  category: string;
-  startDate: string;
-  endDate: string;
-  status: "active" | "completed" | "draft";
-}
 
 export interface Presupuesto {
   id: number;
@@ -31,16 +13,18 @@ export interface Presupuesto {
 export interface Cliente {
   id: number;
   nombre: string;
-  direccion: string;
-  telefono: string;
+  contacto: string;
 }
 
 export interface Vehiculo {
   id: number;
+  tipo: string;
+  color: string;
   marca: string;
   modelo: string;
-  anio: number;
-  patente: string;
+  kilometraje: number;
+  matricula: string;
+  cliente_id: Cliente | null;
 }
 
 export interface User {

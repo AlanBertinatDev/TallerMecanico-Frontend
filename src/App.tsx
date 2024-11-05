@@ -11,9 +11,9 @@ const Inicio = React.lazy(() => import("./pages/Inicio"));
 const Presupuesto = React.lazy(() => import("./pages/Presupuesto"));
 
 // Rutas para la sección de gestión
-const Clientes = React.lazy(() => import("./pages/gestion/clientes"));
-const Productos = React.lazy(() => import("./pages/gestion/productos"));
-const Servicios = React.lazy(() => import("./pages/gestion/servicios"));
+const Clientes = React.lazy(() => import("./pages/gestion/Clientes"));
+const Productos = React.lazy(() => import("./pages/gestion/Productos"));
+const Servicios = React.lazy(() => import("./pages/gestion/Servicios"));
 
 // const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({
 //   children,
