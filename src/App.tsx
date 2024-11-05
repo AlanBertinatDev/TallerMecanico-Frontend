@@ -5,11 +5,15 @@ import { useAuthStore } from "./store/authStore";
 import { Navbar } from "./components/layout/navbar";
 import { Login } from "./pages/Login";
 
-// Lazy load pages
-const Products = React.lazy(() => import("./pages/Products"));
-const Budget = React.lazy(() => import("./pages/Budget"));
-const Dashboard = React.lazy(() => import("./pages/Dashboard"));
+// Enlazado con lazy de rutas
+const Ordenes = React.lazy(() => import("./pages/Ordenes"));
+const Inicio = React.lazy(() => import("./pages/Inicio"));
 const Presupuesto = React.lazy(() => import("./pages/Presupuesto"));
+
+// Rutas para la sección de gestión
+const Clientes = React.lazy(() => import("./pages/gestion/clientes"));
+const Productos = React.lazy(() => import("./pages/gestion/productos"));
+const Servicios = React.lazy(() => import("./pages/gestion/servicios"));
 
 // const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({
 //   children,
@@ -55,10 +59,12 @@ function App() {
                   }
                 >
                   <Routes>
-                    <Route path="/" element={<Dashboard />} />
-                    <Route path="/products" element={<Products />} />
-                    <Route path="/budget" element={<Budget />} />
+                    <Route path="/" element={<Inicio />} />
+                    <Route path="/ordenes" element={<Ordenes />} />
                     <Route path="/presupuesto" element={<Presupuesto />} />
+                    <Route path="/clientes" element={<Clientes />} />
+                    <Route path="/servicios" element={<Servicios />} />
+                    <Route path="/productos" element={<Productos />} />
                   </Routes>
                 </React.Suspense>
               </main>

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useState, useRef } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   PackageSearch,
   CarFront,
@@ -12,23 +12,30 @@ import { useAuthStore } from "../../store/authStore";
 
 export const Navbar: React.FC = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { logout } = useAuthStore();
-  const [isGestionOpen, setGestionOpen] = useState(false); // Estado para manejar el submenú
+  const [isGestionOpen, setGestionOpen] = useState(false);
+  const gestionRef = useRef<HTMLDivElement>(null);
 
   const navItems = [
-    { path: "/", label: "Inicio", icon: CarFront },
+    { path: "/", label: "INICIO", icon: CarFront },
     {
-      label: "Gestión",
+      label: "GESTION",
       icon: PackageSearch,
       subItems: [
-        { path: "/clientes", label: "Clientes" },
-        { path: "/servicios", label: "Servicios" },
-        { path: "/productos", label: "Productos" },
+        { path: "/clientes", label: "CLIENTES" },
+        { path: "/servicios", label: "SERVICIOS" },
+        { path: "/productos", label: "PRODUCTOS" },
       ],
     },
-    { path: "/presupuesto", label: "Presupuesto", icon: PiggyBank },
-    { path: "/budget", label: "Órdenes", icon: Package },
+    { path: "/presupuesto", label: "PRESUPUESTO", icon: PiggyBank },
+    { path: "/ordenes", label: "ORDENES", icon: Package },
   ];
+
+  const handleNavigation = (path: string) => {
+    setGestionOpen(false); // Cierra el menú
+    navigate(path); // Navegar a la ruta deseada
+  };
 
   return (
     <nav className="bg-white border-b border-gray-500">
@@ -38,12 +45,12 @@ export const Navbar: React.FC = () => {
             <div className="flex-shrink-0 flex items-center">
               <Car className="h-8 w-8 text-blue-500" />
               <span className="ml-2 text-xl font-bold text-gray-900">
-                Taller Mecanico
+                TALLER MEC
               </span>
             </div>
             <div className="flex items-center sm:ml-10 sm:flex sm:space-x-10">
               {navItems.map(({ path, label, icon: Icon, subItems }) => (
-                <div key={label} className="relative">
+                <div key={label} className="relative" ref={gestionRef}>
                   {subItems ? (
                     <>
                       <button
@@ -58,23 +65,23 @@ export const Navbar: React.FC = () => {
                         {label}
                       </button>
                       {isGestionOpen && (
-                        <ul className="absolute left-0 mt-2 w-40 bg-white border border-gray-200 rounded shadow-lg">
+                        <ul className="absolute left-0 mt-2 w-40 bg-white border border-gray-200 rounded shadow-lg z-10">
                           {subItems.map((subItem) => (
                             <li key={subItem.label}>
-                              <Link
-                                to={subItem.path}
-                                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                              <button
+                                onClick={() => handleNavigation(subItem.path)} // Manejar navegación
+                                className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
                               >
                                 {subItem.label}
-                              </Link>
+                              </button>
                             </li>
                           ))}
                         </ul>
                       )}
                     </>
                   ) : (
-                    <Link
-                      to={path}
+                    <button
+                      onClick={() => handleNavigation(path)} // Manejar navegación
                       className={`
                         inline-flex items-center px-1 pt-1 text-sm font-medium
                         ${
@@ -86,7 +93,7 @@ export const Navbar: React.FC = () => {
                     >
                       <Icon className="w-4 h-4 mr-2" />
                       {label}
-                    </Link>
+                    </button>
                   )}
                 </div>
               ))}
