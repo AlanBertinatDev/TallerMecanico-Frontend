@@ -33,6 +33,7 @@ const Clientes: React.FC = () => {
       const response = await api.get("/clientes");
       console.log("Datos de clientes recibidos:", response.data);
       setClientes(response.data);
+      return response.data; // Retorna los clientes obtenidos
     } catch (error) {
       console.error("Error al obtener los clientes:", error);
     } finally {
@@ -72,8 +73,10 @@ const Clientes: React.FC = () => {
     );
   }
 
-  const handleSaveCliente = (cliente: Cliente) => {
-    // Lógica para guardar el cliente
+  const handleSaveCliente = async (cliente: Cliente) => {
+    // Aquí puedes usar el cliente para guardarlo si es necesario
+    const updatedClientes = await fetchClientes();
+    setClientes(updatedClientes); // Actualiza la grilla
   };
 
   return (
@@ -95,7 +98,10 @@ const Clientes: React.FC = () => {
         {isModalOpen && (
           <AgregarClienteModal
             onClose={() => setIsModalOpen(false)}
-            onSave={handleSaveCliente}
+            onSave={(cliente) => {
+              handleSaveCliente(cliente);
+              setIsModalOpen(false);
+            }}
           />
         )}
       </div>

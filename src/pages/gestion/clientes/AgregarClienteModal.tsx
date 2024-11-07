@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import { Button } from "../../../components/ui/Button";
 import { Input } from "../../../components/ui/Input";
 import { Cliente, Vehiculo } from "../../../types";
-import axios from "axios";
 import { X, Plus } from "lucide-react";
+import api from "../../../lib/axios";
 
 interface AgregarClienteModalProps {
   onClose: () => void;
   onSave: (cliente: Cliente) => void;
 }
 
-type VehiculoNuevo = Omit<Vehiculo, "id">;
+type VehiculoNuevo = Omit<Vehiculo, "id"> & { id?: number };
 
 const AgregarClienteModal: React.FC<AgregarClienteModalProps> = ({
   onClose,
@@ -51,26 +51,32 @@ const AgregarClienteModal: React.FC<AgregarClienteModalProps> = ({
   };
 
   const handleGuardarCliente = async () => {
-    const vehiculosConId = vehiculos.map((vehiculo, index) => ({
-      ...vehiculo,
-      id: index,
-    }));
+    // Crear los vehículos sin ID antes de enviar al backend
+    const vehiculosSinId: Omit<Vehiculo, "id">[] = vehiculos.map(
+      ({ tipo, color, marca, modelo, matricula, kilometros, cliente }) => ({
+        tipo,
+        color,
+        marca,
+        modelo,
+        matricula,
+        kilometros,
+        cliente,
+      })
+    );
 
-    const nuevoCliente: Cliente = {
-      id: 0,
+    const nuevoCliente = {
       nombre,
       contacto,
-      vehiculos: vehiculosConId,
+      vehiculos: vehiculosSinId, // Esto ahora cumple con el tipo esperado
     };
 
     try {
-      // Llamado POST al backend
-      await axios.post("/api/clientes", nuevoCliente);
-      onSave(nuevoCliente);
+      const response = await api.post<Cliente>("/clientes", nuevoCliente);
+      console.log("Se dió de alta nuevo cliente " + response.data);
+      onSave(response.data);
     } catch (error) {
       console.error("Error al guardar el cliente:", error);
     }
-
     onClose();
   };
 
@@ -83,7 +89,7 @@ const AgregarClienteModal: React.FC<AgregarClienteModalProps> = ({
         >
           <X />
         </button>
-        <h2 className="text-xl font-bold text-center">Nuevo cliente</h2>
+        <h2 className="text-xl font-bold text-center">Nuevo Cliente</h2>
         <Input
           placeholder="Nombre del cliente"
           value={nombre}
@@ -99,7 +105,7 @@ const AgregarClienteModal: React.FC<AgregarClienteModalProps> = ({
 
         {vehiculos.map((vehiculo, index) => (
           <div key={index} className="mt-4 border p-4 rounded relative">
-            <h3 className="text-lg font-semibold">Nuevo vehiculo</h3>
+            <h3 className="text-lg font-semibold">Vehículo {index + 1}</h3>
             <button
               onClick={() => handleEliminarVehiculo(index)}
               className="absolute top-2 right-2 text-red-500 hover:text-red-700"
@@ -107,7 +113,7 @@ const AgregarClienteModal: React.FC<AgregarClienteModalProps> = ({
               <X />
             </button>
             <Input
-              placeholder="Tipo de vehiculo"
+              placeholder="Tipo de vehículo"
               value={vehiculo.tipo}
               onChange={(e) =>
                 handleChangeVehiculo(index, "tipo", e.target.value)
@@ -161,14 +167,17 @@ const AgregarClienteModal: React.FC<AgregarClienteModalProps> = ({
             />
           </div>
         ))}
+        <div className="mt-4 flex justify-center space-x-4">
+          <Button
+            onClick={handleAgregarVehiculo}
+            className="w-2/5 bg-blue-500 mt-2 hover:bg-blue-700"
+          >
+            Agregar Vehículo
+          </Button>
 
-        <Button onClick={handleAgregarVehiculo} className="mt-4">
-          Agregar Vehículo
-        </Button>
-        <div className="mt-4 flex justify-center">
           <Button
             onClick={handleGuardarCliente}
-            className="bg-blue-500 hover:bg-blue-700"
+            className="w-2/5 bg-blue-500 mt-2 hover:bg-blue-700"
           >
             Guardar
           </Button>
