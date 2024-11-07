@@ -20,7 +20,7 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    const message = error.response?.data?.message || "An error occurred";
+    const message = error.response?.data?.message || "Ocurrió un error";
     toast.error(message);
     if (error.response?.status === 401) {
       localStorage.removeItem("token");

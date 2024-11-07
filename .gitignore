@@ -129,3 +129,19 @@ dist
 .yarn/install-state.gz
 .pnp.*
 node/
+
+
+ /* Borrar clientes, creo que no vamos a usarlo.
+  const handleDelete = async (id: number) => {
+    if (!window.confirm("¿Estás seguro de que deseas eliminar este cliente?"))
+      return;
+
+    try {
+      await api.delete(`/clientes/${id}`);
+      setClientes(clientes.filter((c) => c.id !== id));
+      toast.success("Cliente eliminado correctamente");
+    } catch (error) {
+      toast.error("Error al eliminar el cliente en la base de datos");
+      console.error("Error al eliminar el cliente:", error);
+    }
+  };*/

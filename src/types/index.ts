@@ -14,6 +14,7 @@ export interface Cliente {
   id: number;
   nombre: string;
   contacto: string;
+  vehiculos: Vehiculo[];
 }
 
 export interface Vehiculo {
@@ -22,9 +23,9 @@ export interface Vehiculo {
   color: string;
   marca: string;
   modelo: string;
-  kilometraje: number;
   matricula: string;
-  cliente_id: Cliente | null;
+  kilometros: number;
+  cliente: Cliente | null; // Cambiar a cliente en lugar de cliente_id
 }
 
 export interface User {
