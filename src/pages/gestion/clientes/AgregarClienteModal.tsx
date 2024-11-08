@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from "../../../components/ui/Button";
 import { Input } from "../../../components/ui/Input";
 import { Cliente, Vehiculo } from "../../../types";
-import { X, Plus } from "lucide-react";
+import { X } from "lucide-react";
 import api from "../../../lib/axios";
 
 interface AgregarClienteModalProps {
@@ -67,7 +67,7 @@ const AgregarClienteModal: React.FC<AgregarClienteModalProps> = ({
     const nuevoCliente = {
       nombre,
       contacto,
-      vehiculos: vehiculosSinId, // Esto ahora cumple con el tipo esperado
+      vehiculos: vehiculosSinId,
     };
 
     try {
