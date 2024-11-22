@@ -105,7 +105,9 @@ const AgregarClienteModal: React.FC<AgregarClienteModalProps> = ({
 
         {vehiculos.map((vehiculo, index) => (
           <div key={index} className="mt-4 border p-4 rounded relative">
-            <h3 className="text-lg font-semibold">Vehículo {index + 1}</h3>
+            <h3 className="text-xl font-bold text-center text-color">
+              Vehículo {index + 1}
+            </h3>
             <button
               onClick={() => handleEliminarVehiculo(index)}
               className="absolute top-2 right-2 text-red-500 hover:text-red-700"
