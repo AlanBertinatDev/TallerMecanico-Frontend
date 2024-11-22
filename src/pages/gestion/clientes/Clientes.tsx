@@ -25,7 +25,7 @@ const Clientes: React.FC = () => {
     null
   );
   const [currentPage, setCurrentPage] = useState(1);
-  const [clientesPerPage] = useState(10);
+  const [clientesPerPage] = useState(5);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false); // Estado para el modal de edición
   const [clienteToEdit, setClienteToEdit] = useState<ClienteType | null>(null); // Cliente a editar
