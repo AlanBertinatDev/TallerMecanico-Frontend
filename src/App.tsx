@@ -8,7 +8,9 @@ import { Login } from "./pages/Login";
 // Enlazado con lazy de rutas
 const Ordenes = React.lazy(() => import("./pages/Ordenes"));
 const Inicio = React.lazy(() => import("./pages/Inicio"));
-const Presupuesto = React.lazy(() => import("./pages/Presupuesto"));
+const Presupuesto = React.lazy(
+  () => import("./pages/gestion/presupuestos/Presupuesto")
+);
 
 // Rutas para la sección de gestión
 const Clientes = React.lazy(() => import("./pages/gestion/clientes/Clientes"));

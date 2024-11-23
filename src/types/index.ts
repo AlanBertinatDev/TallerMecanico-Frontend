@@ -1,15 +1,3 @@
-// types/index.ts
-
-export interface Presupuesto {
-  id: number;
-  cliente: Cliente | null; // Puede ser null
-  vehiculo: Vehiculo | null; // Puede ser null
-  servicios: Servicio[];
-  totalEstimado: number;
-  fechaCreacion: string; // Cambiar de 'fecha' a 'fechaCreacion' si es necesario
-  estado: "activo" | "inactivo" | "completado"; // Asegúrate de que coincida con los valores de la API
-}
-
 export interface Cliente {
   id: number;
   nombre: string;
