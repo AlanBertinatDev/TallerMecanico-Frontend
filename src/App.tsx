@@ -4,11 +4,15 @@ import { Toaster } from "react-hot-toast";
 import { useAuthStore } from "./store/authStore";
 import { Navbar } from "./components/layout/navbar";
 import { Login } from "./pages/Login";
+import { Provider } from "react-redux";
+import store from "./slices/store";
 
 // Enlazado con lazy de rutas
 const Ordenes = React.lazy(() => import("./pages/Ordenes"));
 const Inicio = React.lazy(() => import("./pages/Inicio"));
-const Presupuesto = React.lazy(() => import("./pages/Presupuesto"));
+const Presupuesto = React.lazy(
+  () => import("./pages/gestion/presupuestos/Presupuesto")
+);
 
 // Rutas para la sección de gestión
 const Clientes = React.lazy(() => import("./pages/gestion/clientes/Clientes"));
@@ -52,7 +56,7 @@ function App() {
             // <PrivateRoute>
             <div className="min-h-screen bg-gray-50">
               <Navbar />
-              <main className="max-w-7xl mx-auto py-6 sm:px-8 lg:px-10">
+              <main className="max-w-8xl sm:max-w-8xl md:max-w-8xl lg:max-w-8xl mx-auto py-6 sm:px-8 lg:px-10 w-full">
                 <React.Suspense
                   fallback={
                     <div className="flex items-center justify-center h-64">
@@ -60,14 +64,16 @@ function App() {
                     </div>
                   }
                 >
-                  <Routes>
-                    <Route path="/" element={<Inicio />} />
-                    <Route path="/ordenes" element={<Ordenes />} />
-                    <Route path="/presupuesto" element={<Presupuesto />} />
-                    <Route path="/clientes" element={<Clientes />} />
-                    <Route path="/servicios" element={<Servicios />} />
-                    <Route path="/productos" element={<Productos />} />
-                  </Routes>
+                  <Provider store={store}>
+                    <Routes>
+                      <Route path="/" element={<Inicio />} />
+                      <Route path="/ordenes" element={<Ordenes />} />
+                      <Route path="/presupuesto" element={<Presupuesto />} />
+                      <Route path="/clientes" element={<Clientes />} />
+                      <Route path="/servicios" element={<Servicios />} />
+                      <Route path="/productos" element={<Productos />} />
+                    </Routes>
+                  </Provider>
                 </React.Suspense>
               </main>
             </div>
